@@ -5,15 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="legosteen11.github.io.blackjackhelper.GameActivity">
+    tools:context="legosteen11.github.io.blackjackhelper.GameActivity"
+    android:background="@color/colorPrimaryDark">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16sp"
+        android:padding="16sp"
         android:id="@+id/advice"
         android:gravity="center"
-        android:textSize="32sp"/>
+        android:textSize="32sp"
+        android:elevation="1sp"
+        android:background="@color/colorPrimary"/>
 
 
     <LinearLayout
@@ -24,15 +27,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/what_card_did_you_draw"
+            android:textSize="24sp"
+            android:padding="8sp"
+            android:background="@color/colorPrimary"
             android:gravity="center"/>
 
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:id="@+id/card_view"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:overScrollMode="never"/>
 
         <TextView
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="32sp"
@@ -43,9 +51,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:layout_margin="4sp"
+            android:textSize="32sp"
+            android:padding="8sp"
+            android:background="@color/colorPrimary"
             android:id="@+id/total_score"
+            android:elevation="1sp"
             android:gravity="center"/>
     </LinearLayout>
 
