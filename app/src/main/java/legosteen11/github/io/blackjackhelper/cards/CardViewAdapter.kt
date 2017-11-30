@@ -1,12 +1,12 @@
 package legosteen11.github.io.blackjackhelper.cards
 
 import android.support.v7.widget.RecyclerView
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import io.github.legosteen11.blackjacklib.Game
-import android.view.LayoutInflater
 import android.widget.Button
-import kotlinx.android.synthetic.main.activity_game.*
+import io.github.legosteen11.blackjacklib.Game
+import io.github.legosteen11.blackjacklib.game.Card
 import kotlinx.android.synthetic.main.card_view.view.*
 import legosteen11.github.io.blackjackhelper.GameActivity
 import legosteen11.github.io.blackjackhelper.R
@@ -24,14 +24,20 @@ class CardViewAdapter(val game: Game, val gameActivity: GameActivity): RecyclerV
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
         val card = game.gameType.deck.getCardsWithoutDuplicates()[position]
 
-        holder.button.text = card.name
+        updateCardView(card, holder)
+
         holder.button.setOnClickListener {
             game.drewCard(card)
-            if(!game.getCardsLeft().contains(card))
-                it.isEnabled = false
-            gameActivity.drawn_card.text = "Getrokken kaart: $card"
-            gameActivity.updateGame(game)
+
+            updateCardView(card, holder)
+
+            gameActivity.updateGame(game, card)
         }
+    }
+
+    fun updateCardView(card: Card, holder: CardViewHolder) {
+        holder.button.text = "${card.name} (${game.getPlayersCards().count { it == card }}x)"
+        holder.button.isEnabled = game.getCardsLeft().contains(card)
     }
 
     override fun getItemCount(): Int = game.gameType.deck.getCardsWithoutDuplicates().size

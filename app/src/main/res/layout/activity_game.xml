@@ -36,8 +36,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="32sp"
-            android:layout_margin="16sp"
+            android:layout_margin="4sp"
             android:id="@+id/drawn_card"
+            android:gravity="center"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_margin="4sp"
+            android:id="@+id/total_score"
             android:gravity="center"/>
     </LinearLayout>
 

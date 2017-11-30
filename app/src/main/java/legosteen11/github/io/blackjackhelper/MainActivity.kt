@@ -2,13 +2,9 @@ package legosteen11.github.io.blackjackhelper
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.widget.ArrayAdapter
-import io.github.legosteen11.blackjacklib.Game
-import io.github.legosteen11.blackjacklib.game.Card
 import io.github.legosteen11.blackjacklib.game.GameType
-
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -30,7 +26,7 @@ class MainActivity : AppCompatActivity() {
     fun startNewGame() {
         startActivity(
                 Intent(this, GameActivity::class.java).apply {
-                    putExtra("game_type", getGameType())
+                    putExtra("game_type", getGameType().name)
                 }
         )
     }

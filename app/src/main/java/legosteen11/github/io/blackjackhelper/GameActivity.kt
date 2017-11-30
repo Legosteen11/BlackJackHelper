@@ -1,12 +1,12 @@
 package legosteen11.github.io.blackjackhelper
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import io.github.legosteen11.blackjacklib.Game
+import io.github.legosteen11.blackjacklib.game.Card
 import io.github.legosteen11.blackjacklib.game.GameType
-
 import kotlinx.android.synthetic.main.activity_game.*
 import legosteen11.github.io.blackjackhelper.cards.CardViewAdapter
 
@@ -18,7 +18,7 @@ class GameActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
 
-        val gameType = savedInstanceState?.get("game_type") as? GameType ?: DEFAULT_GAME_TYPE
+        val gameType = GameType.valueOf(intent.getStringExtra("game_type"))
 
         val game = Game(gameType)
 
@@ -30,17 +30,31 @@ class GameActivity : AppCompatActivity() {
         }
     }
 
-    fun updateGame(game: Game) {
-        advice.text = if(game.getWon())
-            "Je hebt gewonnen!" // TODO: Launch activity with score etc.
-        else if(game.getLost())
-            "Je hebt verloren :(" // TODO: Launch activity with score etc.
-        else if(game.shouldContinue())
+    fun updateGame(game: Game, drawnCard: Card? = null) {
+        if(game.getWon() || game.getLost())
+            gameEnded(game)
+
+        advice.text = if(game.shouldContinue())
             "Ga door"
         else
             "Stop met spelen"
 
-        Log.d("score:", game.getCardsLeft().joinToString())
+        if(drawnCard != null)
+            drawn_card.text = "Getrokken kaart: $drawnCard"
+        else
+            drawn_card.text = "Trek een kaart."
+
+        val scores = game.getScore()
+
+        total_score.text = "Je ${if(scores.size > 1) "scores zijn" else "score is"}: ${scores.sortedBy { it }.joinToString()}"
+    }
+
+    fun gameEnded(game: Game) {
+        startActivity(
+                Intent(this, ResultActivity::class.java).apply {
+                    putExtra("game_result", game)
+                }
+        )
     }
 
 }
