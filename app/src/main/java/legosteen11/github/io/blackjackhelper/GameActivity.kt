@@ -39,6 +39,13 @@ class GameActivity : AppCompatActivity() {
         else
             "Stop met spelen"
 
+        chance_of_not_losing.text = "Kans dat je verliest is ${game.chanceOfLosing().getChanceInPercent()}%"
+        chance_of_not_losing.setBackgroundResource(if(game.shouldContinue())
+            R.color.colorAccent
+        else
+            R.color.colorLost
+        )
+
         if(drawnCard != null)
             drawn_card.text = "Getrokken kaart: $drawnCard"
         else
